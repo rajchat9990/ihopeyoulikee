@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Instagram Trend</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* Page 5 specific button styling */
+    #music-btn, .next-btn {
+      padding: 12px 25px;
+      background: #ff4e50;
+      color: #fff;
+      font-size: 16px;
+      border-radius: 25px;
+      cursor: pointer;
+      border: none;
+      transition: 0.3s;
+      text-decoration: none;
+      margin: 10px;
+    }
+    #music-btn:hover, .next-btn:hover {
+      background: #fc913a;
+      transform: scale(1.1);
+    }
+
+    /* GIF styling */
+    .meme {
+      width: 80%;
+      max-width: 500px;
+      height: auto;
+      display: block;
+      margin: 30px auto;
+      border-radius: 15px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🎵 Cue the Instagram Trend 🎵</h1>
+ <!-- Video -->
+    <video class="meme" autoplay loop muted playsinline>
+      <source src="assets/dance.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+
+    <p>Imagine this with some trending audio 😂</p>
+
+    <!-- Music button -->
+    <button id="music-btn" onclick="toggleMusic()">🎵 Play Music</button>
+
+    <a href="page6.html" class="next-btn">Next ➡️</a>
+
+    <!-- Audio -->
+    <audio id="birthdaySong" loop>
+      <source src="assets/song5.mp3" type="audio/mpeg">
+    </audio>
+  </div>
+
+  <script>
+    let isPlaying = false;
+
+    function toggleMusic() {
+      const song = document.getElementById("birthdaySong");
+      const btn = document.getElementById("music-btn");
+      if (!isPlaying) {
+        song.play().catch(err => console.log(err));
+        btn.textContent = "🔇 Pause Music";
+        isPlaying = true;
+      } else {
+        song.pause();
+        btn.textContent = "🎵 Play Music";
+        isPlaying = false;
+      }
+    }
+  </script>
+</body>
+</html>

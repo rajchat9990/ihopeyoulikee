@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Sweet Surprise 🎁</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* Additional styling for Page 4 buttons */
+    #button-container {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 30px;
+      flex-wrap: wrap;
+    }
+
+    .confetti-btn, .next-btn, #music-btn {
+      padding: 12px 25px;
+      background: #ff4e50;
+      color: #fff;
+      font-size: 16px;
+      border-radius: 25px;
+      cursor: pointer;
+      border: none;
+      transition: 0.3s;
+      text-decoration: none;
+    }
+
+    .confetti-btn:hover, .next-btn:hover, #music-btn:hover {
+      background: #fc913a;
+      transform: scale(1.1);
+    }
+
+    /* Bounce animation */
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    /* Confetti */
+    .confetti {
+      position: fixed;
+      width: 10px;
+      height: 10px;
+      z-index: 200;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1 class="typewriter">A Little Sweet Surprise Just for You 🍬</h1>
+
+    <img src="assets/meme45.jpg" alt="meme4.jpg" class="meme">
+
+    <h2>Who says birthdays can’t be fun? 😎🎉</h2>
+
+    <!-- Music button -->
+    <button id="music-btn" onclick="toggleMusic()">🎵 Play Music</button>
+
+    <!-- Buttons -->
+    <div id="button-container">
+      <button class="confetti-btn" onclick="launchConfettiAndVibrate(this)">🎊 Celebrate!</button>
+      <a href="page5.html" class="next-btn">Next ➡️</a>
+    </div>
+
+    <!-- Audio -->
+    <audio id="birthdaySong" loop>
+      <source src="assets/psong02.mp3" type="audio/mpeg">
+    </audio>
+  </div>
+
+  <script>
+    let isPlaying = false;
+
+    function toggleMusic() {
+      const song = document.getElementById("birthdaySong");
+      const btn = document.getElementById("music-btn");
+      if (!isPlaying) {
+        song.play().catch(err => console.log(err));
+        btn.textContent = "🔇 Pause Music";
+        isPlaying = true;
+      } else {
+        song.pause();
+        btn.textContent = "🎵 Play Music";
+        isPlaying = false;
+      }
+    }
+
+    function launchConfettiAndVibrate(button) {
+      // Bounce button
+      button.style.animation = "bounce 0.5s";
+      setTimeout(() => button.style.animation = "", 500);
+
+      // Vibrate if available
+      if (navigator.vibrate) navigator.vibrate([100,50,100]);
+
+      // Confetti
+      const colors = ['#ff0','#0f0','#0ff','#f0f','#f00'];
+      for (let i=0; i<30; i++) {
+        const conf = document.createElement("div");
+        conf.className = "confetti";
+        conf.style.background = colors[Math.floor(Math.random()*colors.length)];
+        conf.style.left = Math.random() * window.innerWidth + "px";
+        conf.style.top = "-20px";
+        conf.style.opacity = Math.random();
+        conf.style.transform = `rotate(${Math.random()*360}deg)`;
+        document.body.appendChild(conf);
+
+        const fall = conf.animate([
+          { transform: `translateY(0px)` },
+          { transform: `translateY(${window.innerHeight + 100}px)` }
+        ], { duration: 2000 + Math.random()*2000, iterations:1 });
+
+        fall.onfinish = () => conf.remove();
+      }
+    }
+  </script>
+</body>
+</html>

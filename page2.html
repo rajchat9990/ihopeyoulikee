@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Meme Time</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      text-align: center;
+      background: linear-gradient(135deg, #ffdde1, #ee9ca7);
+    }
+
+    .container {
+      padding: 50px;
+    }
+
+    h1 {
+      font-size: 2.5em;
+      margin-bottom: 20px;
+      animation: shake 0.5s infinite;
+    }
+
+    .meme {
+      width: 80%;
+      max-width: 500px;
+      height: auto;
+      margin: 30px auto;
+      border-radius: 15px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+
+    #music-btn, .next-btn {
+      padding: 12px 25px;
+      background: #ff4e50;
+      color: #fff;
+      font-size: 16px;
+      border-radius: 25px;
+      cursor: pointer;
+      border: none;
+      transition: 0.3s;
+      text-decoration: none;
+      margin: 10px;
+    }
+
+    #music-btn:hover, .next-btn:hover {
+      background: #fc913a;
+      transform: scale(1.1);
+    }
+
+    @keyframes shake {
+      0% { transform: translate(1px, 1px) rotate(0deg); }
+      20% { transform: translate(-1px, -2px) rotate(-1deg); }
+      40% { transform: translate(-3px, 0px) rotate(1deg); }
+      60% { transform: translate(3px, 2px) rotate(0deg); }
+      80% { transform: translate(1px, -1px) rotate(1deg); }
+      100% { transform: translate(-1px, 2px) rotate(-1deg); }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>This is me realizing I forgot... 😂</h1>
+
+    <!-- Video -->
+    <video class="meme" autoplay loop muted playsinline>
+      <source src="assets/gajni.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+
+    <!-- Music button -->
+    <button id="music-btn" onclick="toggleMusic()">🎵 Play Music</button>
+
+    <!-- Next button -->
+    <a href="page3.html" class="next-btn">Next ➡️</a>
+
+    <!-- Audio -->
+    <audio id="birthdaySong" loop>
+      <source src="assets/song1.mp3" type="audio/mpeg">
+    </audio>
+  </div>
+
+  <script>
+    // Make sure the button works
+    let isPlaying = false;
+
+    function toggleMusic() {
+      const song = document.getElementById("birthdaySong");
+      const btn = document.getElementById("music-btn");
+
+      if (!isPlaying) {
+        song.play().then(() => {
+          btn.textContent = "🔇 Pause Music";
+          isPlaying = true;
+        }).catch(err => {
+          console.log("Autoplay blocked, click to start music.", err);
+        });
+      } else {
+        song.pause();
+        btn.textContent = "🎵 Play Music";
+        isPlaying = false;
+      }
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Sorry I'm Late!</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* Specific first page styling */
+    body {
+      margin: 0;
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      background: linear-gradient(135deg, #ffdde1, #ee9ca7);
+      color: #222;
+      text-align: center;
+    }
+
+    .container {
+      padding: 50px;
+    }
+
+    h1, h2 {
+      animation: fadeIn 2s ease-in-out;
+    }
+
+    h1 {
+      font-size: 2.8em;
+      margin-bottom: 20px;
+    }
+
+    h2 {
+      font-size: 1.8em;
+      margin-top: 20px;
+    }
+
+    .meme {
+      width: 80%;
+      max-width: 500px;
+      height: auto;
+      display: block;
+      margin: 30px auto;
+      border-radius: 15px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      animation: bounce 2s infinite;
+    }
+
+    /* Music button */
+    #music-btn, .next-btn {
+      padding: 12px 25px;
+      background: #ff4e50;
+      color: #fff;
+      font-size: 16px;
+      border-radius: 25px;
+      cursor: pointer;
+      border: none;
+      transition: 0.3s;
+      text-decoration: none;
+      margin: 10px;
+    }
+
+    #music-btn:hover, .next-btn:hover {
+      background: #fc913a;
+      transform: scale(1.1);
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>😅 Sorry I'm Late to Wish You...</h1>
+    <img src="assets/meme1.gif" alt="meme1.gif" class="meme">
+    <h2>But hey... better late than never! 🎉</h2>
+
+    <!-- Music button -->
+    <button id="music-btn" onclick="toggleMusic()">🎵 Play Music</button>
+
+    <!-- Next button -->
+    <a href="page2.html" class="next-btn">Next ➡️</a>
+
+    <!-- Audio -->
+    <audio id="birthdaySong" loop>
+      <source src="assets/song2.mp3" type="audio/mpeg">
+    </audio>
+    <p class="subtitle">[From Raj to Kanishka]</p>
+  </div>
+
+  <script>
+    let isPlaying = false;
+
+    function toggleMusic() {
+      const song = document.getElementById("birthdaySong");
+      const btn = document.getElementById("music-btn");
+      if (!isPlaying) {
+        song.play().catch(err => console.log(err));
+        btn.textContent = "🔇 Pause Music";
+        isPlaying = true;
+      } else {
+        song.pause();
+        btn.textContent = "🎵 Play Music";
+        isPlaying = false;
+      }
+    }
+  </script>
+</body>
+</html>

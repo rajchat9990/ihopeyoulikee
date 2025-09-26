@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>The End 🎉</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      background: linear-gradient(135deg, #ffdde1, #ee9ca7);
+      color: #222;
+      text-align: center;
+      overflow-x: hidden;
+      overflow-y: auto;
+    }
+
+    .container {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 50px;
+      position: relative;
+    }
+
+    h1, h2 {
+      animation: fadeIn 2s ease-in-out;
+    }
+
+    h1 {
+      font-size: 3em;
+      margin-bottom: 20px;
+    }
+
+    h2 {
+      font-size: 1.8em;
+      margin-top: 20px;
+    }
+
+    p {
+      font-size: 1.3em;
+      margin: 10px 0;
+      animation: fadeIn 3s ease-in-out;
+    }
+
+    .meme {
+      width: 80%;
+      max-width: 500px;
+      height: auto;
+      margin: 30px auto;
+      border-radius: 15px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+      animation: bounce 4s infinite;
+    }
+
+    /* Music button */
+    #music-btn {
+      padding: 12px 25px;
+      background: #ff4e50;
+      color: #fff;
+      font-size: 16px;
+      border-radius: 25px;
+      cursor: pointer;
+      border: none;
+      transition: 0.3s;
+      text-decoration: none;
+      margin-top: 20px;
+    }
+    #music-btn:hover {
+      background: #fc913a;
+      transform: scale(1.1);
+    }
+
+    /* Fade in */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Bounce meme */
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-15px); }
+    }
+
+    /* Confetti */
+    .confetti {
+      position: fixed;
+      width: 10px;
+      height: 10px;
+      z-index: 200;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🎂 Happy Belated Birthday! 🥳</h1>
+    <p>You’re awesome, even if my wishes are late. 😎</p>
+    <img src="assets/meme4.jpg" alt="Funny ending meme" class="meme">
+    <h2>Hope this made you smile 💖</h2>
+
+    <!-- Music button -->
+    <button id="music-btn" onclick="toggleMusic()">🎵 Play Music</button>
+
+    <!-- Audio -->
+    <audio id="birthdaySong" loop>
+      <source src="assets/bsong02.mp3" type="audio/mpeg">
+    </audio>
+  </div>
+
+  <script>
+    let isPlaying = false;
+
+    function toggleMusic() {
+      const song = document.getElementById("birthdaySong");
+      const btn = document.getElementById("music-btn");
+      if (!isPlaying) {
+        song.play().catch(err => console.log(err));
+        btn.textContent = "🔇 Pause Music";
+        isPlaying = true;
+      } else {
+        song.pause();
+        btn.textContent = "🎵 Play Music";
+        isPlaying = false;
+      }
+    }
+
+    // Launch continuous confetti for final page
+    function launchConfetti() {
+      const colors = ['#ff0','#0f0','#0ff','#f0f','#f00','#f90','#09f','#f09'];
+      for (let i = 0; i < 10; i++) {
+        const conf = document.createElement("div");
+        conf.className = "confetti";
+        conf.style.background = colors[Math.floor(Math.random() * colors.length)];
+        conf.style.left = Math.random() * window.innerWidth + "px";
+        conf.style.top = "-20px";
+        conf.style.opacity = Math.random();
+        conf.style.transform = `rotate(${Math.random()*360}deg)`;
+        document.body.appendChild(conf);
+
+        const fall = conf.animate([
+          { transform: `translateY(0px)` },
+          { transform: `translateY(${window.innerHeight + 100}px)` }
+        ], { duration: 2000 + Math.random()*2000, iterations:1 });
+
+        fall.onfinish = () => conf.remove();
+      }
+    }
+
+    // Launch confetti every 300ms
+    setInterval(launchConfetti, 300);
+  </script>
+</body>
+</html>

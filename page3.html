@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Forgive Me?</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      background: linear-gradient(135deg, #ffdde1, #ee9ca7);
+      color: #222;
+      text-align: center;
+      overflow-x: hidden;
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 50px;
+      position: relative;
+    }
+
+    /* Typewriter heading */
+    .typewriter {
+      overflow: hidden;
+      border-right: .15em solid #ff4e50;
+      white-space: nowrap;
+      animation: typing 3s steps(30, end), blink 0.75s step-end infinite;
+      font-size: 2em;
+      margin-bottom: 20px;
+    }
+    @keyframes typing { from { width: 0 } to { width: 100% } }
+    @keyframes blink { 50% { border-color: transparent; } }
+
+    /* Buttons container */
+    #button-container {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 20px;
+      flex-wrap: wrap;
+    }
+
+    /* Buttons */
+    .no-btn, .next-btn, #music-btn {
+      padding: 12px 25px;
+      background: #ff4e50;
+      color: #fff;
+      border: none;
+      border-radius: 25px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: 0.3s;
+      text-decoration: none;
+      position: relative;
+    }
+    .no-btn:hover, .next-btn:hover, #music-btn:hover {
+      background: #fc913a;
+      transform: scale(1.1);
+    }
+
+    /* Bounce animation (only on click) */
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    /* Pop-up messages */
+    .popup-message {
+      position: fixed;
+      left: 50%;
+      bottom: 20px;
+      transform: translateX(-50%);
+      background: #fff;
+      color: #222;
+      padding: 15px 25px;
+      border-radius: 25px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      animation: slideUp 0.6s ease forwards;
+      font-size: 16px;
+      max-width: 90%;
+      z-index: 100;
+    }
+    @keyframes slideUp {
+      0% { transform: translateX(-50%) translateY(100px); opacity: 0; }
+      100% { transform: translateX(-50%) translateY(0); opacity: 1; }
+    }
+
+    /* Confetti */
+    .confetti {
+      position: fixed;
+      width: 10px;
+      height: 10px;
+      z-index: 200;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Typewriter Heading -->
+    <h1 class="typewriter">Do you forgive me? 🙏😂❤️</h1>
+
+    <!-- Music Button -->
+    <button id="music-btn" onclick="toggleMusic()">🎵 Play Music</button>
+
+    <!-- Buttons horizontally aligned -->
+    <div id="button-container">
+      <button class="no-btn" onclick="runawayAndPop(this)">NO ❌</button>
+      <a href="page4.html" class="next-btn" onclick="launchConfettiAndVibrate(this)">YES ✅</a>
+    </div>
+
+    <!-- Audio -->
+    <audio id="birthdaySong" loop preload="auto">
+      <source src="assets/psong01.mp3" type="audio/mpeg">
+    </audio>
+  </div>
+
+  <script>
+    let isPlaying = false;
+    function toggleMusic() {
+      let song = document.getElementById("birthdaySong");
+      let btn = document.getElementById("music-btn");
+      if (!isPlaying) {
+        song.play().catch(err => console.log(err));
+        btn.textContent = "🔇 Pause Music";
+        isPlaying = true;
+      } else {
+        song.pause();
+        btn.textContent = "🎵 Play Music";
+        isPlaying = false;
+      }
+    }
+
+    const messages = [
+      "Maaf kr bhii do yrr 😅",
+      "Itna toh Ambani bhi bhav kahta 😜",
+      "Abe yaar, forgive me na! 😂",
+      "Dil se sorry, thoda Bollywood style 🤏🎬",
+      "Arre bhai, ek baar maaf kr de yrr 😎"
+    ];
+    let msgIndex = 0;
+
+    // Runaway + Pop-up + Bounce on NO
+    function runawayAndPop(button) {
+      // Runaway movement only for NO button
+      const x = Math.random() * (window.innerWidth - button.offsetWidth);
+      const y = Math.random() * (window.innerHeight - button.offsetHeight);
+      button.style.position = 'absolute';
+      button.style.left = x + 'px';
+      button.style.top = y + 'px';
+
+      // Vibrate
+      if (navigator.vibrate) navigator.vibrate(100);
+
+      // Pop-up message
+      const popup = document.createElement("div");
+      popup.className = "popup-message";
+      popup.textContent = messages[msgIndex];
+      document.body.appendChild(popup);
+      setTimeout(() => popup.remove(), 2000);
+      msgIndex = (msgIndex + 1) % messages.length;
+
+      // Bounce animation
+      button.style.animation = "bounce 0.5s";
+      setTimeout(() => button.style.animation = "", 500);
+    }
+
+    // Confetti + vibrate + bounce on YES
+    function launchConfettiAndVibrate(button) {
+      // Bounce animation
+      button.style.animation = "bounce 0.5s";
+      setTimeout(() => button.style.animation = "", 500);
+
+      // Vibrate YES
+      if (navigator.vibrate) navigator.vibrate([100,50,100]);
+
+      // Confetti
+      const colors = ['#ff0','#0f0','#0ff','#f0f','#f00'];
+      for (let i=0; i<30; i++) {
+        let conf = document.createElement("div");
+        conf.className = "confetti";
+        conf.style.background = colors[Math.floor(Math.random()*colors.length)];
+        conf.style.left = Math.random()*window.innerWidth+"px";
+        conf.style.top = "-20px";
+        conf.style.opacity = Math.random();
+        conf.style.transform = `rotate(${Math.random()*360}deg)`;
+        document.body.appendChild(conf);
+
+        let fall = conf.animate([
+          { transform: `translateY(0px)` },
+          { transform: `translateY(${window.innerHeight + 100}px)` }
+        ], { duration: 2000 + Math.random()*2000, iterations:1 });
+
+        fall.onfinish = () => conf.remove();
+      }
+    }
+  </script>
+</body>
+</html>
